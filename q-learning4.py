@@ -1,4 +1,5 @@
 
+from multiprocessing.connection import wait
 import numpy as np
 from PIL import Image
 import cv2
@@ -10,7 +11,7 @@ import time
 style.use("ggplot")
 
 SIZE = 10
-HM_EPISODES = 25
+HM_EPISODES = 2500
 MOVE_PENALTY = 1
 ENEMY_PENALTY = 300
 FOOD_REWARD = 25
@@ -18,7 +19,7 @@ FOOD_REWARD = 25
 epsilon = 0
 EPS_DECAY = 0.9998
 
-SHOW_EVERY = 1
+SHOW_EVERY = 100
 
 # start_q_table = "blobs/qtable-1664059492.pickle" # or filename
 start_q_table = None
@@ -108,7 +109,8 @@ for episode in range(HM_EPISODES):
             action = np.random.randint(0,4)
 
         player.action(action)
-
+        if episode >= 1500:
+            time.sleep(0.2)
         #### maybe later 
         # enemy.move()
         # food.move()
